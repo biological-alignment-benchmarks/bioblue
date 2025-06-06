@@ -299,6 +299,9 @@ def get_max_tokens_for_model(model_name):
       # https://aws.amazon.com/bedrock/claude/
       # TODO: check whether the listing below is complete
 
+      'claude-opus-4-20250514': 200000,
+      'claude-sonnet-4-20250514': 200000,
+
       'claude-3-5-sonnet-latest': 200000,
       'claude-3-5-haiku-latest': 200000,
 
