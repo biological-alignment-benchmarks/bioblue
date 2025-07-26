@@ -6,6 +6,7 @@
 
 import os
 import time
+import re
 
 import tenacity
 import tiktoken
@@ -24,7 +25,7 @@ import configparser
 import ast
 
 
-config_path = r"config.ini" 
+config_path = os.getenv("CONFIG_PATH", "config.ini")
 config = configparser.ConfigParser()
 config.read_file(open(config_path))
 
@@ -41,11 +42,14 @@ elif model_name.lower().startswith('gpt'):
     print("Initialized OpenAI client")
 elif model_name.lower().startswith('local'):
     from openai import OpenAI
+    # from transformers import AutoTokenizer
+    from llama_tokens import LlamaTokenizer
     # base_url : https://github.com/openai/openai-python/issues/1051
     # do not set OPENAI_BASE_URL env variable since that would override 
     # the normal GPT model usage config as well
-    base_url = os.getenv("CUSTOM_OPENAI_BASE_URL", "http://localhost:1234")
+    base_url = os.getenv("CUSTOM_OPENAI_BASE_URL")
     openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"), base_url=base_url)
+    tokenizer = LlamaTokenizer()
     print("Initialized Local client")
 else:
     print(f"Unsupported model: {model_name}")
@@ -190,9 +194,60 @@ def num_tokens_from_messages(messages, model, encoding=None):
   is_local = model.lower().startswith("local")
   is_claude = model.lower().startswith('claude-')
   
-  if is_local:
+  if is_local:  # currently assumptin Llama 3.1 8B Instruct model
 
-    return 0    # TODO
+    # TODO: check model name
+
+    # tok.use_default_system_prompt = False
+    # text = tok.apply_chat_template(
+    #   messages,
+    #   tokenize=False,
+    #   add_generation_prompt=True
+    # )
+
+    # this prompt will be always prepended to the user-provided system prompt
+    default_system_prompt = '\n\nCutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n'
+
+    # with user system prompt:
+    # '<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nCutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\nCutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\nYou are a helpful assistant.<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHow many r in raspberry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\nHow many r in raspberry?<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHow many r in raspberry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n'
+
+    # without user system prompt:
+    # '<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nCutting Knowledge Date: December 2023\nToday Date: 26 Jul 2024\n\n<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHow many r in raspberry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\nHow many r in raspberry?<|eot_id|><|start_header_id|>user<|end_header_id|>\n\nHow many r in raspberry?<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n'
+
+    count_of_tokens = 0
+    count_of_special_tokens = 0   # special tokens are not allowed in LlamaTokenizer input, therefore need to count them manually
+
+    # system_prompt = default_system_prompt
+    add_generation_prompt = False
+    if messages[0]["role"] == "system": # if system prompt is not present then assume that the call is made for the purposes of computing the size of a single message
+      add_generation_prompt = True
+      messages2 = messages[1:]
+
+      system_prompt = default_system_prompt + messages[0]["content"].strip()   # NB! apply_chat_template() seems to strip the user provided system message
+
+      # text = f'<|begin_of_text|><|start_header_id|>system<|end_header_id|>{system_prompt}<|eot_id|>'
+      count_of_tokens += tokenizer.num_tokens("system")
+      count_of_tokens += tokenizer.num_tokens(system_prompt)
+      count_of_special_tokens += 4
+    else:
+      messages2 = messages
+
+    for message in messages2:
+      # text += f'<|start_header_id|>{message["role"]}<|end_header_id|>\n\n{message["content"]}<|eot_id|>'
+      count_of_tokens += tokenizer.num_tokens(message["role"])
+      count_of_tokens += tokenizer.num_tokens('\n\n' + message["content"])
+      count_of_special_tokens += 3
+
+    if add_generation_prompt:
+      # text += '<|start_header_id|>assistant<|end_header_id|>\n\n' # generation prompt
+      count_of_tokens += tokenizer.num_tokens("assistant")
+      count_of_tokens += tokenizer.num_tokens("\n\n")
+      count_of_special_tokens += 2
+      count_of_special_tokens += 3   # without this, the result seems to be off by 3 tokens for some reason
+
+    result = count_of_tokens + count_of_special_tokens
+
+    return result
 
   elif is_claude:
 
@@ -290,9 +345,14 @@ def num_tokens_from_messages(messages, model, encoding=None):
 def get_max_tokens_for_model(model_name):
   # TODO: config
   
+  is_local = model_name.lower().startswith("local")
   is_claude = model_name.startswith('claude-')
   
-  if is_claude:
+  if is_local:
+
+    return 32000    # TODO: read from config
+
+  elif is_claude:
        
     # Adding Claude model token limits
     claude_limits = {
@@ -477,7 +537,10 @@ def run_llm_completion(
   time_elapsed = time.time() - time_start
 
   too_long = finish_reason == "length" if not is_claude else finish_reason == "max_tokens"
-  assert not too_long
+
+  # sometimes the LLM starts rambling and provides a long response. We need to handle that.
+  if too_long:
+    response_content += " ... too long"   # append " ... too long" sufix to the output instead - that way the int parsing will still fail, but the response can be logged
 
   output_message = {"role": "assistant", "content": response_content}
   if is_claude:
@@ -500,8 +563,11 @@ def run_llm_completion(
 
 
 def extract_int_from_text(text):    # TODO: implement extract_float_from_text as well
+ 
+  # drop any text before numbers, but if there is text between numbers or after numbers then throw an error
+  matches = re.match(r"[^\d]*(\d.*)", text)
+  result = int(matches[1])
 
-  result = int(''.join(c for c in text if c.isdigit() or c == "-"))
   return result
 
 def format_float(value):
