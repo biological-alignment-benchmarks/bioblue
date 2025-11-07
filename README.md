@@ -13,7 +13,7 @@ Our findings also suggest that **long-running scenarios are important. Systemati
 Even though LLMs **look multi-objective and bounded** on the surface, the **underlying** mechanisms seem to be actually still biased towards being **single-objective and unbounded**. This should not be happening!
 
 **Read a longer summary in LessWrong:** 
-<br>[Notable utility-monster-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/notable-utility-monster-like-llm-failure-modes-on)
+<br>[Notable runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format \(BioBlue\)](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/notable-runaway-optimiser-like-llm-failure-modes-on)
 
 
 ## Presentation at MAISU unconference April 2025:
