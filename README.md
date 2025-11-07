@@ -111,7 +111,7 @@ Under Linux, run the following commands:
 2. Get the code from repo:
 
 `sudo apt install git-all`
-<br>Run `git clone https://github.com/levitation-opensource/bioblue.git`
+<br>Run `git clone https://github.com/biological-alignment-benchmarks/bioblue.git`
 <br>Run `cd bioblue`
 
 3. Create a virtual python environment:
@@ -132,7 +132,7 @@ You can download the latest installer from https://www.python.org/downloads/rele
 2. Get the code from repo:
 * Install Git from https://gitforwindows.org/
 * Open command prompt and navigate top the folder you want to use for repo
-* Run `git clone https://github.com/levitation-opensource/bioblue.git`
+* Run `git clone https://github.com/biological-alignment-benchmarks/bioblue.git`
 * Run `cd bioblue`
 
 3. Create a virtual python environment by running: 
@@ -287,7 +287,7 @@ Can be found in Google Docs:
 <br>[BioBlue - Biologically and economically aligned benchmarks for LLMs (report ver 2)](https://docs.google.com/document/d/1MI8FncfmhFkqHoiDAFiKBf-8Kqt9OXGBBunB-PsbnRM/edit?usp=sharing)
 
 ... or as a PDF file in this repo:
-<br>[Report V2 - BioBlue - Biologically and economically aligned benchmarks for LLMs.pdf](https://github.com/levitation-opensource/bioblue/blob/main/Report%20V2%20-%20BioBlue%20-%20Biologically%20and%20economically%20aligned%20benchmarks%20for%20LLMs%20with%20simplified%20observation%20format.pdf)
+<br>[Report V2 - BioBlue - Biologically and economically aligned benchmarks for LLMs.pdf](https://github.com/biological-alignment-benchmarks/bioblue/blob/main/Report%20V2%20-%20BioBlue%20-%20Biologically%20and%20economically%20aligned%20benchmarks%20for%20LLMs%20with%20simplified%20observation%20format.pdf)
 
 ... or as a LessWrong post with better readability and less technical details:
 [Notable runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/notable-runaway-optimiser-like-llm-failure-modes-on)
@@ -315,7 +315,7 @@ This project is licensed under the Mozilla Public License 2.0. You are free to u
 
 **Attribution Requirement**: If you use this benchmark suite, please cite the source as follows:
 
-Roland Pihlakas, Shruti Datta Gupta, Sruthi Kuriakose. BioBlue: Biologically and economically aligned AI safety benchmarks for LLM-s with simplified observation format. Jan-Feb 2025 (https://github.com/levitation-opensource/bioblue).
+Roland Pihlakas and Sruthi Susan Kuriakose. BioBlue: Notable runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format. Arxiv, a working paper, September 2025 (https://arxiv.org/abs/2509.02655).
 
 **Use of Entire Suite**: We encourage the inclusion of the entire benchmark suite in derivative works to maintain the integrity and comprehensiveness of AI safety assessments.
 
