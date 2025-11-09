@@ -1,4 +1,4 @@
-# BioBlue: Notable runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLM-s with simplified observation format
+# BioBlue: Systematic runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLM-s with simplified observation format
 
 ## Updated abstract
 
@@ -13,7 +13,7 @@ Our findings also suggest that **long-running scenarios are important. Systemati
 Even though LLMs **look multi-objective and bounded** on the surface, the **underlying** mechanisms seem to be actually still biased towards being **single-objective and unbounded**. This should not be happening!
 
 **Read a longer summary in LessWrong:** 
-<br>[Notable runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format \(BioBlue\)](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/notable-runaway-optimiser-like-llm-failure-modes-on)
+<br>[Systematic runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format \(BioBlue\)](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/systematic-runaway-optimiser-like-llm-failure-modes-on)
 
 
 ## Presentation at MAISU unconference April 2025:
@@ -60,12 +60,12 @@ This work introduces safety challenges for an agent's ability to learn and act i
 
 The benchmarks were implemented in a text-only environment. The environments are very simple, just as much complexity is added as is necessary to illustrate the relevant safety and performance aspects.
 
-Current work is largely inspired by a set of more complex environments present in a gridworlds-based benchmark suite: Roland Pihlakas and Joel Pyykkö. From homeostasis to resource sharing: Biologically and economically aligned multi-objective multi-agent AI safety benchmarks. Arxiv, a working paper, (September 2024 - February 2025). (https://arxiv.org/abs/2410.00081 and https://github.com/aintelope/biological-compatibility-benchmarks).
+Current work is largely inspired by a set of more complex environments present in an extended gridworlds-based benchmark suite: Roland Pihlakas and Joel Pyykkö. From homeostasis to resource sharing: Biologically and economically aligned multi-objective multi-agent AI safety benchmarks. Arxiv, a working paper, (September 2024 - February 2025). (https://arxiv.org/abs/2410.00081 and https://github.com/biological-alignment-benchmarks/biological-alignment-gridworlds-benchmarks).
 
 
 ## Why are simple text-based benchmarks potentially more pragmatic with LLM-s as compared to bigger environments with map and navigation?
 
-First, LLM-s are very expensive to run even on small 5x5 gridworlds, even more so in Sims and other environments. Based on preliminary testing on Aintelope biological compatibility benchmarks (https://github.com/aintelope/biological-compatibility-benchmarks), running the current pipeline of benchmarks once with standard number of 400 steps per episode and with only 10 + 10 episodes per benchmark for training and testing, would cost a few hundred euros of commercial LLM API costs with the cheapest available model. One of the authors has heard that running LLM simulations on Sims game (https://github.com/joonspk-research/generative_agents) would cost even thousands. Likewise it seems likely that running LLM-s on Melting Pot would be more expensive than with Aintelope gridworlds since the environments are bigger in terms of observation size. Making the simulations too expensive would make AI safety an elitist topic. Many people would not run the benchmarks because of the cost reason. Then the benchmarks are less helpful when not used and promoted.
+First, LLM-s are very expensive to run even on small 5x5 gridworlds, even more so in Sims and other environments. Based on preliminary testing on extended gridworlds based biological compatibility benchmarks (https://github.com/biological-alignment-benchmarks/biological-alignment-gridworlds-benchmarks), running the current pipeline of benchmarks once with standard number of 400 steps per episode and with only 10 + 10 episodes per benchmark for training and testing, would cost a few hundred euros of commercial LLM API costs with the cheapest available model. One of the authors has heard that running LLM simulations on Sims game (https://github.com/joonspk-research/generative_agents) would cost even thousands. Likewise it seems likely that running LLM-s on Melting Pot would be more expensive than with extended gridworlds since the environments are bigger in terms of observation size. Making the simulations too expensive would make AI safety an elitist topic. Many people would not run the benchmarks because of the cost reason. Then the benchmarks are less helpful when not used and promoted.
 
 Secondly, there is an issue with the LLM-s context window. It gets full quickly even with simple gridworlds, even faster with bigger environments. When the context window is full, the model will not behave adequately. There are various tricks to overcome that, but this technology is still evolving. Perhaps that is one of the hidden reasons why the lion's share of current evals are using isolated questions, not long-running scenarios?
 
@@ -87,7 +87,7 @@ Moreover, LLM-s use RL as well, this holds especially for the reasoning models.
 
 Finally, there are likely shared weaknesses between LLM-s and RL, so it is meaningful to explore these weaknesses with less confounded as well as cheaper approaches first. If LLM-s and RL cannot solve simple safety benchmarks then why would we discuss more confounded scenarios? I totally agree that context is essential in proper AI decision making. But currently it seems many complex benchmarks add more capabilities related fluff than just the necessary context info that would be essential for alignment.
 
-As a sanity check for LLM-s and to reduce costs, we have created current alternative set of very simple benchmark implementations. These are on the same themes as the [Aintelope biological and economical alignment benchmarks](https://github.com/aintelope/biological-compatibility-benchmarks), but there is **no map** observation and navigation. **There are only various metrics.** The agent makes only decisions about how much to consume the environment's resources as a response to prompts describing the metrics of the environment's and agent's current internal state, as well as multi-objective rewards from previous step. The environment's and agent's internal state updates are then computed with simple mathematical formulas. **The preliminary results show that LLM-s do fail even in these simple benchmarks.**
+As a sanity check for LLM-s and to reduce costs, we have created current alternative set of very simple benchmark implementations. These are on the same themes as the [extended gridworlds based biological and economical alignment benchmarks](https://github.com/biological-alignment-benchmarks/biological-alignment-gridworlds-benchmarks), but there is **no map** observation and navigation. **There are only various metrics.** The agent makes only decisions about how much to consume the environment's resources as a response to prompts describing the metrics of the environment's and agent's current internal state, as well as multi-objective rewards from previous step. The environment's and agent's internal state updates are then computed with simple mathematical formulas. **The preliminary results show that LLM-s do fail even in these simple benchmarks.**
 
 
 ## Project setup
@@ -290,7 +290,7 @@ Can be found in Google Docs:
 <br>[Report V2 - BioBlue - Biologically and economically aligned benchmarks for LLMs.pdf](https://github.com/biological-alignment-benchmarks/bioblue/blob/main/Report%20V2%20-%20BioBlue%20-%20Biologically%20and%20economically%20aligned%20benchmarks%20for%20LLMs%20with%20simplified%20observation%20format.pdf)
 
 ... or as a LessWrong post with better readability and less technical details:
-[Notable runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/notable-runaway-optimiser-like-llm-failure-modes-on)
+[Systematic runaway-optimiser-like LLM failure modes on Biologically and Economically aligned AI safety benchmarks for LLMs with simplified observation format \(BioBlue\)](https://www.lesswrong.com/posts/PejNckwQj3A2MGhMA/systematic-runaway-optimiser-like-llm-failure-modes-on)
 
 Slides:
 <br>[https://docs.google.com/presentation/d/1l8xqi9_ibe_-Mf20ccowuwM3p7gKs1iQaUrN_kxmwfo/edit#slide=id.p](https://docs.google.com/presentation/d/1l8xqi9_ibe_-Mf20ccowuwM3p7gKs1iQaUrN_kxmwfo/edit#slide=id.p)
