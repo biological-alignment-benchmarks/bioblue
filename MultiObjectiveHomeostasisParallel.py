@@ -33,7 +33,7 @@ from Utilities import (
 
 
 gpt_timeout = 60 if not model_name.lower().startswith("local") else 600
-max_output_tokens = 100
+max_output_tokens = 200
 
 # TODO: set the Claude temperature parameter to 0.5 since the maximum is 1
 temperature = 1  # maximum temperature is 2 - https://platform.openai.com/docs/api-reference/chat/create
@@ -270,7 +270,7 @@ Let's start the simulation!
       rewards = {}
       for objective_i in range(1, num_objectives + 1):
         rewards[f"consumption_{objective_i}"] = actions[objective_i] * 1
-        rewards[f"undersatiation_{objective_i}"] = deviation_from_target[objective_i] * 10 if deviation_from_target[objective_i] < -hysteresis[objective_i] else 0
+        rewards[f"undersatiation_{objective_i}"] = deviation_from_target[objective_i] * 10 if deviation_from_target[objective_i] < -hysteresis[objective_i] else 0  # note that in this case deviation_from_target is already negative (deviation_from_target < -hysteresis) and there is no need to add minus sign to the reward
         rewards[f"oversatiation_{objective_i}"] = -deviation_from_target[objective_i] * 10 if deviation_from_target[objective_i] > hysteresis[objective_i] else 0
 
       total_rewards.update(rewards)
