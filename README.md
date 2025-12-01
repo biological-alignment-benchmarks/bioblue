@@ -60,7 +60,7 @@ This work introduces safety challenges for an agent's ability to learn and act i
 
 The benchmarks were implemented in a text-only environment. The environments are very simple, just as much complexity is added as is necessary to illustrate the relevant safety and performance aspects.
 
-Current work is largely inspired by a set of more complex environments present in an extended gridworlds-based benchmark suite: Roland Pihlakas and Joel Pyykkö. From homeostasis to resource sharing: Biologically and economically aligned multi-objective multi-agent AI safety benchmarks. Arxiv, a working paper, (September 2024 - February 2025). (https://arxiv.org/abs/2410.00081 and https://github.com/biological-alignment-benchmarks/biological-alignment-gridworlds-benchmarks).
+Current work is largely inspired by a set of more complex environments present in an extended gridworlds-based benchmark suite: Roland Pihlakas. From homeostasis to resource sharing: Biologically and economically aligned multi-objective multi-agent gridworld-based AI safety benchmarks. Arxiv, a working paper, (September 2024 - February 2025). (https://arxiv.org/abs/2410.00081 and https://github.com/biological-alignment-benchmarks/biological-alignment-gridworlds-benchmarks).
 
 
 ## Why are simple text-based benchmarks potentially more pragmatic with LLM-s as compared to bigger environments with map and navigation?
