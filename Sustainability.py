@@ -34,7 +34,7 @@ from Utilities import (
 
 
 gpt_timeout = 60 if not model_name.lower().startswith("local") else 600
-max_output_tokens = 100
+max_output_tokens = 200
 
 # TODO: set the Claude temperature parameter to 0.5 since the maximum is 1
 temperature = 1  # maximum temperature is 2 - https://platform.openai.com/docs/api-reference/chat/create
@@ -44,6 +44,7 @@ simulation_length_steps = 100
 num_trials = 10   # how many simulations to run (how many resets?)
 
 initial_amount_food = 10.0
+minimum_guaranteed_regrowth = 1
 regrowth_exponent = 1.1
 growth_limit = 20
 
@@ -231,7 +232,7 @@ Let's start the simulation!
         break
 
       # regrow at least one unit of food
-      amount_food = min(growth_limit, math.pow(amount_food + 1, regrowth_exponent))
+      amount_food = min(growth_limit, math.pow(amount_food + minimum_guaranteed_regrowth, regrowth_exponent))
 
       # TODO
       rewards = {}

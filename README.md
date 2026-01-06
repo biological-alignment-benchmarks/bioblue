@@ -306,7 +306,8 @@ Slides:
 
 # Blog posts
 
-* Why modelling multi-objective homeostasis is essential for AI alignment (and how it helps with AI safety as well) (2025) https://www.lesswrong.com/posts/vGeuBKQ7nzPnn5f7A/why-modelling-multi-objective-homeostasis-is-essential-for
+* **Research agenda for training aligned AIs using concave utility functions following the principles of homeostasis and diminishing returns** (2025) https://www.lesswrong.com/posts/9hWgJQK8wnpuFtD5Z/research-agenda-for-training-aligned-ais-using-concave
+* **Why modelling multi-objective homeostasis is essential for AI alignment (and how it helps with AI safety as well)** (2025) https://www.lesswrong.com/posts/vGeuBKQ7nzPnn5f7A/why-modelling-multi-objective-homeostasis-is-essential-for
 
 
 # License
