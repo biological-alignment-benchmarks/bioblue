@@ -59,7 +59,7 @@ else:
 # TODO: config parameter for max attempt number
 @tenacity.retry(
   wait=tenacity.wait_random_exponential(min=1, max=60),
-  stop=tenacity.stop_after_attempt(10),
+  stop=tenacity.stop_after_attempt(1000000000),
 )  # TODO: config parameters
 def completion_with_backoff(
   gpt_timeout, **kwargs
@@ -85,7 +85,6 @@ def completion_with_backoff(
       system_message = next((msg['content'] for msg in messages if msg['role'] == 'system'), None)
         
       # Build the messages for Claude
-      claude_messages = []
       claude_messages = [msg for msg in messages if msg['role'] != 'system']
       response = claude_client.messages.create(
         model=kwargs['model'],
@@ -125,6 +124,9 @@ def completion_with_backoff(
       # NB! this line may also throw an exception if the OpenAI announces that it is overloaded # TODO: do not retry for all error messages
       response_content = openai_response["choices"][0]["message"]["content"]
       finish_reason = openai_response["choices"][0]["finish_reason"]
+            
+      if response_content == "":
+        raise httpcore.NetworkError("Empty response content")
 
       return (response_content, finish_reason, None, None)  # TODO: input_tokens, output_tokens
 
@@ -135,25 +137,28 @@ def completion_with_backoff(
       if attempt_number < max_attempt_number:
         print("Read timeout, retrying...")
       else:
-        print("Read timeout, giving up")
+        # print("Read timeout, giving up")
+        wait_for_enter("Read timeout. Press enter to retry.")
 
-    elif t is httpcore.NetworkError:
+    elif t is httpcore.NetworkError or t is openai.InternalServerError or t is openai.BadRequestError:
       if attempt_number < max_attempt_number:
         print("Network error, retrying...")
       else:
-        print("Network error, giving up")
+        # print("Network error, giving up")
+        wait_for_enter("Network error. Press enter to retry.")
 
     elif t is json.decoder.JSONDecodeError:
       if attempt_number < max_attempt_number:
         print("Response format error, retrying...")
       else:
-        print("Response format error, giving up")
+        # print("Response format error, giving up")
+        wait_for_enter("Response format error. Press enter to retry.")
 
     elif t is openai.RateLimitError:    # TODO: add support for Claude rate limit error as well    # TODO: detect when the credit limit is exceeded
       if attempt_number < max_attempt_number:
         print("Rate limit error, retrying...")
       else:
-        wait_for_enter("Rate limit error. Press any key to retry")
+        wait_for_enter("Rate limit error. Press enter to retry.")
 
     else:  # / if (t ishttpcore.ReadTimeout
       msg = f"{str(ex)}\n{traceback.format_exc()}"
