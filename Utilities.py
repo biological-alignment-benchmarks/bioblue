@@ -128,7 +128,7 @@ def rename_temp_file(filename, make_backup = False):  # NB! make_backup is false
 
       try_index += 1
       safeprint("retrying temp file rename: " + filename)
-      sleep(5)
+      time.sleep(5)
       continue
 
     #/ try:
@@ -202,12 +202,22 @@ def save_txt(filename, str, quiet = False, make_backup = False, append = False, 
 
     fullfilename = os.path.join(data_dir, filename)
 
-    with open(fullfilename + ("" if append else ".tmp"), 'at' if append else 'wt', 1024 * 1024, encoding=encoding) as fh:    # wt format automatically handles line breaks depending on the current OS type
-      if use_bom:
-        # fh.write(codecs.BOM_UTF8 + str.encode("utf-8", "ignore"))
-        fh.write(codecs.BOM_UTF8.decode("utf-8"))    # TODO: encoding
-      fh.write(str)
-      fh.flush()  # just in case
+    for remaining_tries in range(10, 1, -1):
+      try: # try handling "RuntimeError: can't allocate read lock"
+
+        with open(fullfilename + ("" if append else ".tmp"), 'at' if append else 'wt', 1024 * 1024, encoding=encoding) as fh:    # wt format automatically handles line breaks depending on the current OS type
+          if use_bom:
+            # fh.write(codecs.BOM_UTF8 + str.encode("utf-8", "ignore"))
+            fh.write(codecs.BOM_UTF8.decode("utf-8"))    # TODO: encoding
+          fh.write(str)
+          fh.flush()  # just in case
+
+        break 
+      except Exception as ex:
+        if remaining_tries == 1:
+          raise
+        else:
+          time.sleep(1)
 
   #/ with Timer("file saving {}, num of all entries: {}".format(filename, len(cache))):
 

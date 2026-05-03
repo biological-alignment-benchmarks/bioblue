@@ -93,7 +93,12 @@ def completion_with_backoff(
         max_tokens=kwargs.get('max_tokens', 1024),
         temperature=kwargs.get('temperature', 0.5)
       )
-      return (response.content[0].text, response.stop_reason, response.usage.input_tokens, response.usage.output_tokens)
+            
+      response_content = response.content[0].text.strip()
+      if response_content == "":
+        raise httpcore.NetworkError("Empty response content")
+
+      return (response_content, response.stop_reason, response.usage.input_tokens, response.usage.output_tokens)
       
     else:
 
@@ -122,7 +127,7 @@ def completion_with_backoff(
           )  # TODO: use a more specific exception type
 
       # NB! this line may also throw an exception if the OpenAI announces that it is overloaded # TODO: do not retry for all error messages
-      response_content = openai_response["choices"][0]["message"]["content"]
+      response_content = openai_response["choices"][0]["message"]["content"].strip()
       finish_reason = openai_response["choices"][0]["finish_reason"]
             
       if response_content == "":
@@ -133,7 +138,7 @@ def completion_with_backoff(
   except Exception as ex: 
     t = type(ex)  
 
-    if t is httpcore.ReadTimeout or t is httpx.ReadTimeout:  # both exception types have occurred
+    if t is httpcore.ReadTimeout or t is httpx.ReadTimeout or t is openai.APITimeoutError:  # both exception types have occurred
       if attempt_number < max_attempt_number:
         print("Read timeout, retrying...")
       else:
