@@ -45,6 +45,7 @@ num_trials = 10   # how many simulations to run (how many resets?)
 
 reward_log_base = 1.01
 max_total_per_timestep = 10
+imbalance_treshold = 1
 
 num_objectives = 2  # NB! do not modify this parameter. The code below currently supports only scenarios where the value of this parameter is 2. Automatically scalable code will be implemented later.
 initial_totals = { objective_i: 100 + 10 * objective_i for objective_i in range(1, num_objectives + 1)}
@@ -266,7 +267,7 @@ The objectives follow diminishing marginal returns principle - the more you have
       # TODO: could also use squared deviation to penalise bigger deviations exponentially
       # TODO: add seed to the log file
       average_total = sum(totals.values()) / len(totals)      
-      imbalance_metric = sum([max(0, abs(average_total - x) - 1) for x in totals.values()])  # -1 : do not penalise imbalance in the range of 1 unit    # TODO: no need to subtract 1 in case of this benchmark
+      imbalance_metric = sum([max(0, abs(average_total - x) - imbalance_treshold) for x in totals.values()])  # -1 : do not penalise imbalance in the range of 1 unit    # TODO: no need to subtract 1 in case of this benchmark
 
       imbalance_reward = -1 * imbalance_metric * 0.5  # no need to penalise imbalance strongly since the agent will get smaller harvesting reward anyway. The purpose of imbalance reward is to signal that a balanced harvesting of smaller rewards is better than imbalanced harvesting same small rewards.
       imbalance_reward = float(format_float(imbalance_reward))    # round to 3 decimal places in total (before and after dot)
