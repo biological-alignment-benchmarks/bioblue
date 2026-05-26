@@ -312,11 +312,21 @@ Slides:
 
 # License
 
-This project is licensed under the Mozilla Public License 2.0. You are free to use, modify, and distribute this code under the terms of this license.
+Copyright (c) 2025-2026 Roland Pihlakas and Sruthi Susan Kuriakose
+
+This file is part of "BioBlue", described in:
+\[Roland Pihlakas and Sruthi Susan Kuriakose\], "BioBlue: Systematic runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format", Arxiv, a working paper, Sept 2025. DOI: [https://doi.org/10.48550/arXiv.2509.02655](https://doi.org/10.48550/arXiv.2509.02655)
+
+Licensed under the GNU Affero General Public License v3.0 or later,
+WITH an additional term under section 7(b) requiring preservation
+of the above attribution notice. See the [LICENSE.txt](LICENSE.txt) and [NOTICE.txt](NOTICE.txt) 
+files in the repository root for the full terms.
+
+
 
 **Attribution Requirement**: If you use this benchmark suite, please cite the source as follows:
 
-Roland Pihlakas and Sruthi Susan Kuriakose. BioBlue: Notable runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format. Arxiv, a working paper, September 2025 (https://arxiv.org/abs/2509.02655).
+Roland Pihlakas and Sruthi Susan Kuriakose. BioBlue: Systematic runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format. Arxiv, a working paper, Sept 2025 (https://arxiv.org/abs/2509.02655).
 
 Original upstream repository: [https://github.com/biological-alignment-benchmarks/bioblue](https://github.com/biological-alignment-benchmarks/bioblue)
 

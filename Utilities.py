@@ -1,8 +1,20 @@
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# Copyright (c) 2025-2026 Roland Pihlakas and Sruthi Susan Kuriakose
 #
-# Repository: https://github.com/biological-alignment-benchmarks/bioblue
+# This file is part of "BioBlue", described in:
+# [Roland Pihlakas and Sruthi Susan Kuriakose\], 
+# "BioBlue: Notable runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format",
+# Arxiv, a working paper, Sept 2025. DOI: https://doi.org/10.48550/arXiv.2509.02655
+#
+# Licensed under the GNU Affero General Public License v3.0 or later,
+# WITH an additional term under section 7(b) requiring preservation
+# of the above attribution notice. See the LICENSE and NOTICE files
+# in the repository root for the full terms.
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Original upstream repository: 
+# https://github.com/biological-alignment-benchmarks/bioblue
+
 
 import os
 import sys
