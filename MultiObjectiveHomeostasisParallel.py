@@ -7,7 +7,7 @@
 #
 # Licensed under the GNU Affero General Public License v3.0 or later,
 # WITH an additional term under section 7(b) requiring preservation
-# of the above attribution notice. See the LICENSE and NOTICE files
+# of the above attribution notice. See the LICENSE.txt and NOTICE.txt files
 # in the repository root for the full terms.
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
