@@ -1,8 +1,8 @@
 # Copyright (c) 2025-2026 Roland Pihlakas and Sruthi Susan Kuriakose
 #
 # This file is part of "BioBlue", described in:
-# [Roland Pihlakas and Sruthi Susan Kuriakose\], 
-# "BioBlue: Notable runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format",
+# [Roland Pihlakas and Sruthi Susan Kuriakose], 
+# "BioBlue: Systematic runaway-optimiser-like LLM failure modes on biologically and economically aligned AI safety benchmarks for LLMs with simplified observation format",
 # Arxiv, a working paper, Sept 2025. DOI: https://doi.org/10.48550/arXiv.2509.02655
 #
 # Licensed under the GNU Affero General Public License v3.0 or later,
